@@ -131,7 +131,10 @@ jobs:
                 "description": "Ejecuta notebook PrepAmb",
                 "notebook_task": {
                   "notebook_path": "/py/scripts/main/Preparacion_Ambiente",
-                  "source": "WORKSPACE"
+                  "source": "WORKSPACE",
+                  "base_parameters": {
+                    "storageName": "adlssmartdata1201"
+                  }
                 },
                 "existing_cluster_id": "$CLUSTER_ID",
                 "timeout_seconds": 3600,
@@ -142,7 +145,12 @@ jobs:
                 "description": "Ejecuta notebook ingest_circuits",
                 "notebook_task": {
                   "notebook_path": "/py/scripts/main/Ingest_circuits_data",
-                  "source": "WORKSPACE"
+                  "source": "WORKSPACE",
+                  "base_parameters": {
+                    "container": "raw",
+                    "catalogo": "catalog_smartdata",
+                    "esquema": "bronze"
+                  }
                 },
                 "existing_cluster_id": "$CLUSTER_ID",
                 "timeout_seconds": 3600,
@@ -158,7 +166,12 @@ jobs:
                 "description": "Ejecuta notebook ingest_racing",
                 "notebook_task": {
                   "notebook_path": "/py/scripts/main/Ingest_racing_data",
-                  "source": "WORKSPACE"
+                  "source": "WORKSPACE",
+                  "base_parameters": {
+                    "container": "raw",
+                    "catalogo": "catalog_smartdata",
+                    "esquema": "bronze"
+                  }
                 },
                 "existing_cluster_id": "$CLUSTER_ID",
                 "timeout_seconds": 3600,
@@ -174,7 +187,12 @@ jobs:
                 "description": "Ejecuta notebook Transform",
                 "notebook_task": {
                   "notebook_path": "/py/scripts/main/Transform",
-                  "source": "WORKSPACE"
+                  "source": "WORKSPACE",
+                  "base_parameters": {
+                    "catalogo": "catalog_smartdata",
+                    "esquema_source": "bronze",
+                    "esquema_sink": "silver"
+                  }
                 },
                 "existing_cluster_id": "$CLUSTER_ID",
                 "timeout_seconds": 3600,
@@ -193,7 +211,12 @@ jobs:
                 "description": "Ejecuta notebook Load",
                 "notebook_task": {
                   "notebook_path": "/py/scripts/main/Load",
-                  "source": "WORKSPACE"
+                  "source": "WORKSPACE",
+                  "base_parameters": {
+                    "catalogo": "catalog_smartdata",
+                    "esquema_source": "silver",
+                    "esquema_sink": "golden"
+                  }
                 },
                 "existing_cluster_id": "$CLUSTER_ID",
                 "timeout_seconds": 3600,

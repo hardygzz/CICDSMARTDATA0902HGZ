@@ -19,6 +19,7 @@ jobs:
           ORIGIN_TOKEN=${{ secrets.DATABRICKS_ORIGIN_TOKEN }}
           NOTEBOOK_BASE="/Workspace/Users/databricks_gr11@hotmail.com/CICDSMARTDATA0902HGZ/Proceso" #reemplazar la ruta
           NOTEBOOKS=("Ingest_circuits_data" "Ingest_racing_data" "Transform" "Load" "Preparacion_Ambiente")  # Agrega más según necesitesas
+          NOTEBOOKS=("ntbk_1" "ntbk_2")  # Agrega más según necesitesas
           mkdir -p notebooks_to_deploy
           for nb in "${NOTEBOOKS[@]}"; do
             echo "Exportando $nb en modo raw..."
@@ -104,7 +105,7 @@ jobs:
                   "notebook_path": "/py/scripts/main/Preparacion_Ambiente",
                   "source": "WORKSPACE"
                 },
-                "existing_cluster_id": "$CLUSTER_ID",
+                "job_cluster_key": "serverless_cluster",
                 "timeout_seconds": 3600,
                 "max_retries": 2
               },
@@ -115,7 +116,7 @@ jobs:
                   "notebook_path": "/py/scripts/main/Ingest_circuits_data",
                   "source": "WORKSPACE"
                 },
-                "existing_cluster_id": "$CLUSTER_ID",
+                "job_cluster_key": "serverless_cluster",
                 "timeout_seconds": 3600,
                 "max_retries": 2,
                 "depends_on": [
@@ -131,7 +132,7 @@ jobs:
                   "notebook_path": "/py/scripts/main/Ingest_racing_data",
                   "source": "WORKSPACE"
                 },
-                "existing_cluster_id": "$CLUSTER_ID",
+                "job_cluster_key": "serverless_cluster",
                 "timeout_seconds": 3600,
                 "max_retries": 2,
                 "depends_on": [
@@ -147,7 +148,7 @@ jobs:
                   "notebook_path": "/py/scripts/main/Transform",
                   "source": "WORKSPACE"
                 },
-                "existing_cluster_id": "$CLUSTER_ID",
+                "job_cluster_key": "serverless_cluster",
                 "timeout_seconds": 3600,
                 "max_retries": 2,
                 "depends_on": [
@@ -166,7 +167,7 @@ jobs:
                   "notebook_path": "/py/scripts/main/Load",
                   "source": "WORKSPACE"
                 },
-                "existing_cluster_id": "$CLUSTER_ID",
+                "job_cluster_key": "serverless_cluster",
                 "timeout_seconds": 3600,
                 "max_retries": 2,
                 "depends_on": [
@@ -190,7 +191,7 @@ jobs:
                     "environment": "production",
                     "team": "data-engineering"
                   }
-                }
+              }
               }
             ],
             "schedule": {
